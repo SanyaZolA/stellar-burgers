@@ -18,22 +18,18 @@ export const BurgerConstructor: FC = () => {
     (state: RootState) => state.user.user?.name !== ''
   );
   const navigate = useNavigate();
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
 
   const constructorItems = useSelector(getBurgerIngredient);
 
   const orderRequest = useSelector(getOrderStatus);
 
   const orderModalData = useSelector(getOrderModalDataSelector);
-  console.log('asdasdasdasdad', orderModalData);
 
   const onOrderClick = () => {
+    if (!constructorItems.bun || orderRequest) return;
     if (!isAuthenticated) {
       navigate('/login');
     } else {
-      if (!constructorItems.bun || orderRequest) return;
-      console.log('item', constructorItems);
-
       dispatch(
         addOrderBurgerThunk(constructorItems.ingredients.map((ing) => ing._id))
       );

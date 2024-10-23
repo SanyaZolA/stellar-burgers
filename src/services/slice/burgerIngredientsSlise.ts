@@ -23,9 +23,9 @@ const burgerIngredientsSlice = createSlice({
       }),
       reducer: (state, action) => {
         const ingredient = action.payload;
+        console.log(ingredient);
         if (ingredient.type === 'bun') {
           state.bun = ingredient;
-          console.log(ingredient);
         } else {
           state.ingredients.push(ingredient);
         }

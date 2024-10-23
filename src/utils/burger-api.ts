@@ -1,7 +1,7 @@
 import { setCookie, getCookie } from './cookie';
 import { TIngredient, TOrder, TOrdersData, TUser } from './types';
 
-const URL = process.env.REACT_APP_BURGER_API_URL;
+const URL = 'https://norma.nomoreparties.space/api';
 
 console.log(URL);
 

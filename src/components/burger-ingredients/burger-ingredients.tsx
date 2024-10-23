@@ -4,12 +4,10 @@ import { useSelector } from 'react-redux';
 
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
-import { RootState } from '../../services/store';
+import { getIngredientsSelectors } from '../../services/slice/ingredientsSlise';
 
 export const BurgerIngredients: FC = () => {
-  const ingredients = useSelector(
-    (state: RootState) => state.ingredients.ingredients
-  );
+  const ingredients = useSelector(getIngredientsSelectors);
   /** TODO: взять переменные из стора */
   const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
   const mains = ingredients.filter((ingredient) => ingredient.type === 'main');
