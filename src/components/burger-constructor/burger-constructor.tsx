@@ -3,7 +3,10 @@ import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'src/services/store';
-import { getBurgerIngredient, delIngredient } from '../../services/slice/burgerIngredientsSlise';
+import {
+  getBurgerIngredient,
+  delIngredient
+} from '../../services/slice/burgerIngredientsSlise';
 import {
   addOrderBurgerThunk,
   getOrderModalDataSelector,
@@ -20,21 +23,26 @@ export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
 
   const constructorItems = useSelector(getBurgerIngredient);
+  console.log('constructorItems', constructorItems);
 
   const orderRequest = useSelector(getOrderStatus);
+  console.log('orderRequest', orderRequest);
 
   const orderModalData = useSelector(getOrderModalDataSelector);
+  console.log('orderModalData', orderModalData);
 
   const onOrderClick = () => {
-    if (!constructorItems.bun || orderRequest) return;
     if (!isAuthenticated) {
       navigate('/login');
     } else {
+      if (!constructorItems.bun || orderRequest) return;
+      const orderIngredients = [
+        constructorItems.bun._id,
+        ...constructorItems.ingredients.map((ing) => ing._id),
+        constructorItems.bun._id
+      ];
+      dispatch(addOrderBurgerThunk(orderIngredients));
       dispatch(delIngredient());
-      dispatch(
-        addOrderBurgerThunk(constructorItems.ingredients.map((ing) => ing._id))
-        
-      );
     }
   };
 

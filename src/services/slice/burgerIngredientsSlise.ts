@@ -23,7 +23,6 @@ const burgerIngredientsSlice = createSlice({
       }),
       reducer: (state, action) => {
         const ingredient = action.payload;
-        console.log(ingredient);
         if (ingredient.type === 'bun') {
           state.bun = ingredient;
         } else {
@@ -51,8 +50,7 @@ const burgerIngredientsSlice = createSlice({
       state.ingredients.splice(action.payload, 1);
     },
     delIngredient: (state) => {
-      state.ingredients = [],
-      state.bun = null
+      (state.ingredients = []), (state.bun = null);
     }
   },
   selectors: {

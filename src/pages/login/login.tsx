@@ -13,11 +13,10 @@ export const Login: FC = () => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.user?.name !== ''
   );
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/profile'); // Навигация только после обновления состояния
-    }
-  }, [isAuthenticated, navigate]);
+
+  if (isAuthenticated) {
+    navigate('/profile'); // Навигация только после обновления состояния
+  }
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
