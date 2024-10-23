@@ -23,13 +23,10 @@ export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
 
   const constructorItems = useSelector(getBurgerIngredient);
-  console.log('constructorItems', constructorItems);
 
   const orderRequest = useSelector(getOrderStatus);
-  console.log('orderRequest', orderRequest);
 
   const orderModalData = useSelector(getOrderModalDataSelector);
-  console.log('orderModalData', orderModalData);
 
   const onOrderClick = () => {
     if (!isAuthenticated) {
