@@ -9,13 +9,6 @@ export const ProtectedRoute: FC<{ children: JSX.Element }> = ({ children }) => {
 
   const isAuthenticated = !!accessToken || !!refreshToken;
 
-  useEffect(() => {
-    console.log('Current location:', location.pathname);
-    console.log('Is Authenticated:', isAuthenticated);
-    console.log('Access Token:', accessToken);
-    console.log('Refresh Token:', refreshToken);
-  }, [location, accessToken, refreshToken, isAuthenticated]);
-
   if (!isAuthenticated) {
     return <Navigate to='/login' state={{ from: location }} />;
   }
