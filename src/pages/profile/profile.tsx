@@ -1,14 +1,21 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import { getUser, updateUserApiThunk } from '../../services/slice/userSlice';
+import {
+  getUserApiThunk,
+  updateUserApiThunk
+} from '../../services/slice/userSlice';
 import { useDispatch, useSelector } from '../../services/store';
 import { Preloader } from '@ui';
+import { getCookie } from '../../utils/cookie';
 
 export const Profile: FC = () => {
-  /** TODO: взять переменную из стора */
-
-  const { user, loading } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  const accessToken = getCookie('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+
+  const isAuthenticated = !!accessToken || !!refreshToken;
 
   const [formValue, setFormValue] = useState({
     name: user.name,
@@ -55,8 +62,8 @@ export const Profile: FC = () => {
     }));
   };
 
-  if (loading) {
-    return <Preloader />; // Отображение прелоадера
+  if (!isAuthenticated) {
+    return <Preloader />;
   }
 
   return (

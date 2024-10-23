@@ -20,8 +20,8 @@ import {
   useLocation,
   useNavigate
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../services/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../services/store';
 import { getIngredientsThunk } from '../../services/slice/ingredientsSlise';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 import { getFeedThunk } from '../../services/slice/feedSlice';
@@ -71,7 +71,6 @@ const App = () => {
         <Route path='*' element={<NotFound404 />} />
       </Routes>
 
-      {/* Модальное окно поверх страницы */}
       {background && (
         <Routes>
           <Route

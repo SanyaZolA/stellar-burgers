@@ -1,7 +1,10 @@
 import { FC, SyntheticEvent, useState, useEffect } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUserApiThunk } from '../../services/slice/userSlice';
+import {
+  getUserApiThunk,
+  loginUserApiThunk
+} from '../../services/slice/userSlice';
 import { AppDispatch, RootState } from 'src/services/store';
 import { useNavigate } from 'react-router-dom';
 import { Preloader } from '@ui';

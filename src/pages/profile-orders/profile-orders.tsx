@@ -4,7 +4,6 @@ import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getOrdersThunk,
-  addOrderBurgerThunk,
   getOrdersSelectors
 } from '../../services/slice/ordersSlice';
 import { AppDispatch } from 'src/services/store';
