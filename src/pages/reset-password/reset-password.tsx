@@ -5,6 +5,7 @@ import { resetPasswordApi } from '@api';
 import { ResetPasswordUI } from '@ui-pages';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/services/store';
+import { Preloader } from '@ui';
 
 export const ResetPassword: FC = () => {
   const navigate = useNavigate();

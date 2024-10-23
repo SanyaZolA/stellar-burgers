@@ -13,18 +13,20 @@ import { getCookie, setCookie } from '../../utils/cookie';
 type TUserData = {
   name: string;
   email: string;
-  password: string; // Добавляем пароль для регистрации
+  password: string;
 };
 
 type IInitialState = {
   user: Omit<TUserData, 'password'>;
+  loading: boolean;
 };
 
 const initialState: IInitialState = {
   user: {
     name: '',
     email: ''
-  }
+  },
+  loading: false
 };
 
 export const registerUserApiThunk = createAsyncThunk(
@@ -71,7 +73,6 @@ export const logoutApiThunk = createAsyncThunk(
   }
 );
 
-// Slice
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -83,8 +84,12 @@ const userSlice = createSlice({
     builder.addCase(loginUserApiThunk.fulfilled, (state, { payload }) => {
       state.user = payload.user;
     });
+    builder.addCase(getUserApiThunk.pending, (state) => {
+      state.loading = true;
+    });
     builder.addCase(getUserApiThunk.fulfilled, (state, { payload }) => {
       state.user = payload.user;
+      state.loading = false;
     });
     builder.addCase(updateUserApiThunk.fulfilled, (state, { payload }) => {
       state.user = payload.user;

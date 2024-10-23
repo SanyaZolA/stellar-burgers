@@ -2,11 +2,12 @@ import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { getUser, updateUserApiThunk } from '../../services/slice/userSlice';
 import { useDispatch, useSelector } from '../../services/store';
+import { Preloader } from '@ui';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
 
-  const user = useSelector(getUser);
+  const { user, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({
@@ -53,6 +54,10 @@ export const Profile: FC = () => {
       [e.target.name]: e.target.value
     }));
   };
+
+  if (loading) {
+    return <Preloader />; // Отображение прелоадера
+  }
 
   return (
     <ProfileUI

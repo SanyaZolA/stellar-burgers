@@ -9,6 +9,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from 'src/services/store';
 import { useNavigate } from 'react-router-dom';
+import { Preloader } from '@ui';
 
 export const Register: FC = () => {
   const [userName, setUserName] = useState('');
