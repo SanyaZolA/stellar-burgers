@@ -3,7 +3,7 @@ import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'src/services/store';
-import { getBurgerIngredient } from '../../services/slice/burgerIngredientsSlise';
+import { getBurgerIngredient, delIngredient } from '../../services/slice/burgerIngredientsSlise';
 import {
   addOrderBurgerThunk,
   getOrderModalDataSelector,
@@ -30,14 +30,17 @@ export const BurgerConstructor: FC = () => {
     if (!isAuthenticated) {
       navigate('/login');
     } else {
+      dispatch(delIngredient());
       dispatch(
         addOrderBurgerThunk(constructorItems.ingredients.map((ing) => ing._id))
+        
       );
     }
   };
 
   const closeOrderModal = () => {
     dispatch(resetOrderState());
+    dispatch(delIngredient());
   };
 
   const price = useMemo(
