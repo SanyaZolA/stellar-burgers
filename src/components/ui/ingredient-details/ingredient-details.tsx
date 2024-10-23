@@ -1,6 +1,7 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useState } from 'react';
 import styles from './ingredient-details.module.css';
 import { IngredientDetailsUIProps } from './type';
+import { Preloader } from '../preloader';
 
 export const IngredientDetailsUI: FC<IngredientDetailsUIProps> = memo(
   ({ ingredientData }) => {

@@ -13,7 +13,7 @@ export type TIngredient = {
 };
 
 export type TConstructorIngredient = TIngredient & {
-  id: string;
+  uniqueId: string;
 };
 
 export type TOrder = {
@@ -30,6 +30,7 @@ export type TOrdersData = {
   orders: TOrder[];
   total: number;
   totalToday: number;
+  resetOrderState: boolean;
 };
 
 export type TUser = {
