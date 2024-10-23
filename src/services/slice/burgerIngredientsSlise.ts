@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { v4 as uuid4 } from 'uuid'; // Импортируем uuid для генерации уникальных ID
 import { TConstructorIngredient, TIngredient } from '@utils-types';
 
 type IinitialState = {
@@ -16,15 +15,20 @@ const burgerIngredientsSlice = createSlice({
   name: 'burgerIngredients',
   initialState,
   reducers: {
-    addIngredient: (state, action) => {
-      const ingredient = action.payload;
-      if (ingredient.type === 'bun') {
-        state.bun = ingredient;
-      } else {
-        state.ingredients.push({
-          ...ingredient,
-          id: window.crypto.randomUUID()
-        });
+    addIngredient: {
+      prepare: (ingredient: TIngredient) => ({
+        payload: { ...ingredient, id: window.crypto.randomUUID() },
+        meta: {},
+        error: null
+      }),
+      reducer: (state, action) => {
+        const ingredient = action.payload;
+        if (ingredient.type === 'bun') {
+          state.bun = ingredient;
+          console.log(ingredient);
+        } else {
+          state.ingredients.push(ingredient);
+        }
       }
     },
     moveIngredientUp: (state, action: PayloadAction<number>) => {

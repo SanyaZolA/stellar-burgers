@@ -13,14 +13,17 @@ export const Login: FC = () => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.user?.name !== ''
   );
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/profile'); // Навигация только после обновления состояния
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     const userData = { email, password };
     dispatch(loginUserApiThunk(userData));
   };
-
-  if (isAuthenticated) navigate('/');
 
   return (
     <LoginUI

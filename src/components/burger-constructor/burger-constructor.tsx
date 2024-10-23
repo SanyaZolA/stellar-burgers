@@ -25,12 +25,15 @@ export const BurgerConstructor: FC = () => {
   const orderRequest = useSelector(getOrderStatus);
 
   const orderModalData = useSelector(getOrderModalDataSelector);
+  console.log('asdasdasdasdad', orderModalData);
 
   const onOrderClick = () => {
     if (!isAuthenticated) {
       navigate('/login');
     } else {
       if (!constructorItems.bun || orderRequest) return;
+      console.log('item', constructorItems);
+
       dispatch(
         addOrderBurgerThunk(constructorItems.ingredients.map((ing) => ing._id))
       );

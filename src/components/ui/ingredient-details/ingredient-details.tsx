@@ -8,21 +8,12 @@ export const IngredientDetailsUI: FC<IngredientDetailsUIProps> = memo(
     const { name, image_large, calories, proteins, fat, carbohydrates } =
       ingredientData;
 
-    const [isLoading, setIsLoading] = useState(true);
-
     return (
       <div className={styles.content}>
-        {isLoading && (
-          <p className='text text_type_main-default'>
-            <Preloader />
-          </p>
-        )}
         <img
           className={styles.img}
           alt='изображение ингредиента.'
           src={image_large}
-          onLoad={() => setIsLoading(false)}
-          style={isLoading ? { display: 'none' } : {}}
         />
         <h3 className='text text_type_main-medium mt-2 mb-4'>{name}</h3>
         <ul className={`${styles.nutritional_values} text_type_main-default`}>

@@ -43,8 +43,9 @@ export const ordersSlice = createSlice({
     builder.addCase(addOrderBurgerThunk.pending, (state) => {
       state.orderStatus = true;
     });
-    builder.addCase(addOrderBurgerThunk.fulfilled, (state) => {
+    builder.addCase(addOrderBurgerThunk.fulfilled, (state, { payload }) => {
       state.orderStatus = false;
+      state.orderModalData = payload.order;
     });
   },
   selectors: {

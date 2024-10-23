@@ -25,9 +25,7 @@ import { AppDispatch } from '../../services/store';
 import { getIngredientsThunk } from '../../services/slice/ingredientsSlise';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 import { getFeedThunk } from '../../services/slice/feedSlice';
-import { getUserApi } from '@api';
 import { getUserApiThunk } from '../../services/slice/userSlice';
-import { getCookie } from '../../utils/cookie';
 
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -37,9 +35,9 @@ const App = () => {
   const background = location.state?.background;
 
   useEffect(() => {
+    dispatch(getUserApiThunk());
     dispatch(getIngredientsThunk());
     dispatch(getFeedThunk());
-    dispatch(getUserApiThunk());
   }, [dispatch]);
 
   return (
