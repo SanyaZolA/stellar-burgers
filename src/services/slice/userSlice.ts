@@ -8,7 +8,7 @@ import {
 } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { getCookie, setCookie } from '../../utils/cookie';
+import { setCookie } from '../../utils/cookie';
 
 type TUserData = {
   name: string;

@@ -16,8 +16,6 @@ export const Login: FC = () => {
     (state: RootState) => state.user.user?.name !== ''
   );
 
-  console.log(isAuthenticated);
-
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/profile');
