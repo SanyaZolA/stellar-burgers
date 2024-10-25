@@ -1,15 +1,16 @@
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
-import { useSelector } from 'react-redux';
 import {
-  getUser,
   registerUserApiThunk,
   getUserApiThunk
 } from '../../services/slice/userSlice';
-import { useDispatch } from 'react-redux';
-import { AppDispatch, RootState } from 'src/services/store';
 import { useNavigate } from 'react-router-dom';
-import { Preloader } from '@ui';
+import {
+  AppDispatch,
+  useDispatch,
+  useSelector,
+  RootState
+} from '../../services/store';
 
 export const Register: FC = () => {
   const [userName, setUserName] = useState('');

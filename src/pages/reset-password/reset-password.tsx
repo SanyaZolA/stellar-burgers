@@ -1,11 +1,8 @@
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { resetPasswordApi } from '@api';
 import { ResetPasswordUI } from '@ui-pages';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/services/store';
-import { Preloader } from '@ui';
+import { useSelector, RootState } from '../../services/store';
 
 export const ResetPassword: FC = () => {
   const navigate = useNavigate();

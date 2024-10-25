@@ -2,19 +2,28 @@ import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
+import { RootState, useSelector } from '../../services/store';
 import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {
   const { number } = useParams<{ number: string }>();
 
-  const orders = useSelector((state: RootState) => state.feeds.orders);
+  const orders = useSelector((state: RootState) => state.orders.orders);
+
+  const feeds = useSelector((state: RootState) => state.feeds.orders);
+
+  const combinedOrder = [...orders, ...feeds].filter(
+    (item, index, self) =>
+      index === self.findIndex((t) => t.number === item.number)
+  );
+
   const ingredients = useSelector(
     (state: RootState) => state.ingredients.ingredients
   );
 
-  const orderData = orders.find((item) => item.number === Number(number));
+  const orderData = combinedOrder.find(
+    (item) => item.number === Number(number)
+  );
 
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;

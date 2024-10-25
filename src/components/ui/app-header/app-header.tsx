@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { FC } from 'react';
+import { useSelector, RootState } from '../../../services/store';
 import styles from './app-header.module.css';
 import { TAppHeaderUIProps } from './type';
 import {
@@ -8,8 +8,7 @@ import {
   Logo,
   ProfileIcon
 } from '@zlden/react-developer-burger-ui-components';
-import { Link, NavLink } from 'react-router-dom';
-import { RootState } from 'src/services/store';
+import { NavLink } from 'react-router-dom';
 
 export const AppHeaderUI: FC<TAppHeaderUIProps> = () => {
   const userName = useSelector((state: RootState) => state.user.user?.name);

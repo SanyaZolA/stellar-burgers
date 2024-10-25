@@ -1,13 +1,13 @@
 import { FC, SyntheticEvent, useState, useEffect } from 'react';
 import { LoginUI } from '@ui-pages';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  getUserApiThunk,
-  loginUserApiThunk
-} from '../../services/slice/userSlice';
-import { AppDispatch, RootState } from 'src/services/store';
+import { loginUserApiThunk } from '../../services/slice/userSlice';
 import { useNavigate } from 'react-router-dom';
-import { Preloader } from '@ui';
+import {
+  AppDispatch,
+  useDispatch,
+  useSelector,
+  RootState
+} from '../../services/store';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
@@ -21,7 +21,7 @@ export const Login: FC = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/profile');
+      navigate('/');
     }
   }, [isAuthenticated, navigate]);
 

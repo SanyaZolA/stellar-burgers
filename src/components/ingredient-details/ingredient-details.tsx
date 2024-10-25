@@ -1,9 +1,8 @@
 import { FC } from 'react';
 import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
-import { useSelector } from 'react-redux';
+import { RootState, useSelector } from '../../services/store';
 import { useParams } from 'react-router-dom';
-import { RootState } from '../../services/store';
 import { TIngredient } from '@utils-types';
 
 export const IngredientDetails: FC = () => {

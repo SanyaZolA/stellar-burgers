@@ -1,8 +1,12 @@
 import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from 'src/services/store';
+import {
+  AppDispatch,
+  RootState,
+  useDispatch,
+  useSelector
+} from '../../services/store';
 import {
   getBurgerIngredient,
   delIngredient

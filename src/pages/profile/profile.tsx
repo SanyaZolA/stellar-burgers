@@ -1,12 +1,9 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import {
-  getUserApiThunk,
-  updateUserApiThunk
-} from '../../services/slice/userSlice';
-import { useDispatch, useSelector } from '../../services/store';
+import { updateUserApiThunk } from '../../services/slice/userSlice';
 import { Preloader } from '@ui';
 import { getCookie } from '../../utils/cookie';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const Profile: FC = () => {
   const { user } = useSelector((state) => state.user);

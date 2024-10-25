@@ -1,16 +1,15 @@
 import { FC } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ProfileMenuUI } from '@ui';
-import { useDispatch } from 'react-redux';
+import { AppDispatch, useDispatch } from '../../services/store';
 import { logoutApiThunk } from '../../services/slice/userSlice';
-import { AppDispatch } from 'src/services/store';
 import { deleteCookie } from '../../utils/cookie';
 import { useNavigate } from 'react-router-dom';
 
 export const ProfileMenu: FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const dispatch: AppDispatch = useDispatch<AppDispatch>();
+  const dispatch: AppDispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(logoutApiThunk()).then((result) => {
