@@ -5,7 +5,6 @@ import { Preloader } from '@ui';
 import { useDispatch, useSelector } from '../../services/store';
 
 export const Profile: FC = () => {
-  debugger;
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const isLoadingProfile = useSelector(getLoading);

@@ -1,6 +1,10 @@
 import { FC, SyntheticEvent, useState, useEffect } from 'react';
 import { LoginUI } from '@ui-pages';
-import { getLoading, loginUserApiThunk } from '../../services/slice/userSlice';
+import {
+  getLoading,
+  getUserApiThunk,
+  loginUserApiThunk
+} from '../../services/slice/userSlice';
 import { useNavigate } from 'react-router-dom';
 import {
   AppDispatch,
@@ -13,19 +17,27 @@ import { Preloader } from '@ui';
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [initialLoad, setInitialLoad] = useState(true); // Отслеживание первой загрузки
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoadingProfile = useSelector(getLoading);
 
+  const isLoadingProfile = useSelector(getLoading);
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.user?.name !== ''
   );
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (!isAuthenticated) {
+      dispatch(getUserApiThunk());
+      setInitialLoad(false);
+    }
+  }, [dispatch, isAuthenticated]);
+
+  useEffect(() => {
+    if (isAuthenticated && !initialLoad) {
       navigate('/');
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, initialLoad]);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -33,7 +45,7 @@ export const Login: FC = () => {
     dispatch(loginUserApiThunk(userData));
   };
 
-  if (isLoadingProfile) {
+  if (isLoadingProfile || initialLoad) {
     return <Preloader />;
   }
 

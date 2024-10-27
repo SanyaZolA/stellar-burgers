@@ -26,7 +26,7 @@ const initialState: IInitialState = {
     name: '',
     email: ''
   },
-  loading: true
+  loading: false
 };
 
 export const registerUserApiThunk = createAsyncThunk(
@@ -88,7 +88,10 @@ const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(getUserApiThunk.fulfilled, (state, { payload }) => {
+      state.loading = false;
       state.user = payload.user;
+    });
+    builder.addCase(getUserApiThunk.rejected, (state) => {
       state.loading = false;
     });
     builder.addCase(updateUserApiThunk.fulfilled, (state, { payload }) => {
