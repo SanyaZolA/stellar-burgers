@@ -16,7 +16,9 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   );
 
   const orderInfo = useMemo(() => {
-    if (!ingredients.length) return null;
+    {
+      !ingredients.length && null;
+    }
 
     const ingredientsInfo = order.ingredients.reduce(
       (acc: TIngredient[], item: string) => {
@@ -47,7 +49,9 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
     };
   }, [order, ingredients]);
 
-  if (!orderInfo) return null;
+  {
+    !orderInfo && null;
+  }
 
   return (
     <OrderCardUI

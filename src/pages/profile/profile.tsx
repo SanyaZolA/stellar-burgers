@@ -1,18 +1,14 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import { updateUserApiThunk } from '../../services/slice/userSlice';
+import { updateUserApiThunk, getLoading } from '../../services/slice/userSlice';
 import { Preloader } from '@ui';
-import { getCookie } from '../../utils/cookie';
 import { useDispatch, useSelector } from '../../services/store';
 
 export const Profile: FC = () => {
+  debugger;
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  const accessToken = getCookie('accessToken');
-  const refreshToken = localStorage.getItem('refreshToken');
-
-  const isAuthenticated = !!accessToken || !!refreshToken;
+  const isLoadingProfile = useSelector(getLoading);
 
   const [formValue, setFormValue] = useState({
     name: user.name,
@@ -59,17 +55,19 @@ export const Profile: FC = () => {
     }));
   };
 
-  if (!isAuthenticated) {
-    return <Preloader />;
-  }
-
   return (
-    <ProfileUI
-      formValue={formValue}
-      isFormChanged={isFormChanged}
-      handleCancel={handleCancel}
-      handleSubmit={handleSubmit}
-      handleInputChange={handleInputChange}
-    />
+    <>
+      {isLoadingProfile ? (
+        <Preloader />
+      ) : (
+        <ProfileUI
+          formValue={formValue}
+          isFormChanged={isFormChanged}
+          handleCancel={handleCancel}
+          handleSubmit={handleSubmit}
+          handleInputChange={handleInputChange}
+        />
+      )}
+    </>
   );
 };

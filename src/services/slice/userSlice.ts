@@ -26,7 +26,7 @@ const initialState: IInitialState = {
     name: '',
     email: ''
   },
-  loading: false
+  loading: true
 };
 
 export const registerUserApiThunk = createAsyncThunk(
@@ -102,9 +102,10 @@ const userSlice = createSlice({
     });
   },
   selectors: {
-    getUser: (state) => state.user
+    getUser: (state) => state.user,
+    getLoading: (state) => state.loading
   }
 });
 
-export const { getUser } = userSlice.selectors;
+export const { getUser, getLoading } = userSlice.selectors;
 export const reducer = userSlice.reducer;
