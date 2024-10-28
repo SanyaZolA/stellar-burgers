@@ -4,17 +4,21 @@ import { useLocation } from 'react-router-dom';
 import { OrderCardProps } from './type';
 import { TIngredient } from '@utils-types';
 import { OrderCardUI } from '../ui/order-card';
+import { RootState, useSelector } from '../../services/store';
 
 const maxIngredients = 6;
 
 export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   const location = useLocation();
 
-  /** TODO: взять переменную из стора */
-  const ingredients: TIngredient[] = [];
+  const ingredients = useSelector(
+    (state: RootState) => state.ingredients.ingredients
+  );
 
   const orderInfo = useMemo(() => {
-    if (!ingredients.length) return null;
+    {
+      !ingredients.length && null;
+    }
 
     const ingredientsInfo = order.ingredients.reduce(
       (acc: TIngredient[], item: string) => {
@@ -45,7 +49,9 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
     };
   }, [order, ingredients]);
 
-  if (!orderInfo) return null;
+  {
+    !orderInfo && null;
+  }
 
   return (
     <OrderCardUI
