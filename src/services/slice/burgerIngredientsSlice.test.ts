@@ -5,7 +5,8 @@ import {
   moveIngredientDown,
   removeIngredient,
   delIngredient,
-  getBurgerIngredient
+  getBurgerIngredient,
+  initialState
 } from './burgerIngredientsSlice';
 
 const initialSateTwoIngredients = {
@@ -57,11 +58,6 @@ const initialSateTwoIngredients = {
 };
 
 describe('Тест слайса - burgerIngredientsSlice', () => {
-  const initialState = {
-    ingredients: [],
-    bun: null
-  };
-
   test('добавление ингредиента', () => {
     const ingredient = {
       _id: '7467',

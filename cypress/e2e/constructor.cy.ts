@@ -1,53 +1,61 @@
 describe('проверяем доступность приложения', function() {
   it('сервис должен быть доступен по адресу localhost:4000', function() {
-      cy.visit('http://localhost:4000'); 
+    cy.visit('/');
   });
 }); 
 
-describe('Тесты главной страницы и модального окна', () => {
+describe('Тесты главной страницы и модального окна', () => { 
   beforeEach(() => {
-    cy.visit('http://localhost:4000');
+    cy.visit('/');
+    cy.intercept('GET', '/api/ingredients', { fixture: 'ingredients.json' });
+    cy.intercept('GET', '/api/auth/user', { fixture: 'user.json' });
+    cy.get('body').as('MainPage');
+    cy.get(':nth-child(2) > :nth-child(2) > .common_button').as('addButtonBun');
+    cy.get(':nth-child(4) > :nth-child(2) > .common_button').as('addButtonMeet');
+    cy.get(':nth-child(6) > :nth-child(2) > .common_button').as('addButtonSauce');
+    cy.get('#modals').as('modalComponent');
+    cy.contains('Краторная булка N-200i').as('kratorBun');
   });
-;
 
   it('проверка добавления в конструктор булки: верх и низ', () => {
-    cy.get('body').contains('Флюоресцентная булка R2-D3');
-    cy.get(':nth-child(2) > :nth-child(2) > .common_button').click();
-    cy.get('body').contains('Филе Люминесцентного тетраодонтимформа');
-    cy.get(':nth-child(4) > :nth-child(2) > .common_button').click();
-    cy.get('body').contains('Соус с шипами Антарианского плоскоходца');
-    cy.get(':nth-child(6) > :nth-child(4) > .common_button').click();
-    cy.get('.constructor-element_pos_top').contains('Флюоресцентная булка R2-D3 (верх)');
-    cy.get('.constructor-element').contains('Соус с шипами Антарианского плоскоходца');
-    cy.get('.constructor-element').contains('Филе Люминесцентного тетраодонтимформа');
-    cy.get('.constructor-element_pos_bottom').contains('Флюоресцентная булка R2-D3 (низ)');  
-  })
+    cy.get('@MainPage').contains('Флюоресцентная булка R2-D3');
+    cy.get('@addButtonBun').click();
+    cy.get('@addButtonMeet').click();
+    cy.get('@addButtonSauce').click();
+    cy.get('.constructor-element_pos_top').as('topBun');
+    cy.get('@topBun').contains('Флюоресцентная булка R2-D3 (верх)');
+    cy.get('.constructor-element_pos_bottom').as('bottomBun');
+    cy.get('@bottomBun').contains('Флюоресцентная булка R2-D3 (низ)');
+    cy.get('.constructor-element').as('middleIngredients');
+    cy.get('@middleIngredients').contains('Соус фирменный Space Sauce');
+    cy.get('@middleIngredients').contains('Филе Люминесцентного тетраодонтимформа');
+  });
 
   it ('Проверка модального окна ингредиента: открытие', () => {
-    cy.contains('Краторная булка N-200i').click();
-    cy.get('#modals').children().should('have.length', 2);
-    cy.get('#modals').contains('Краторная булка N-200i');
+    cy.get('@kratorBun').click();
+    cy.get('@modalComponent').children().should('have.length', 2);
+    cy.get('@modalComponent').contains('Краторная булка N-200i');
   });
 
   it ('Проверка модального окна ингредиента: закрытие по кнопке', () => {
-    cy.contains('Краторная булка N-200i').click();
-    cy.get('#modals').children().should('have.length', 2);
-    cy.get('#modals').find('button').click();
-    cy.get('#modals').children().should('have.length', 0);
+    cy.get('@kratorBun').click();
+    cy.get('@modalComponent').children().should('have.length', 2);
+    cy.get('@modalComponent').find('button').click();
+    cy.get('@modalComponent').children().should('have.length', 0);
   });
 
   it ('Проверка закрытия модального окна ингредиента: закрытие по нажатию (escape)', () => {
-    cy.contains('Краторная булка N-200i').click();
-    cy.get('#modals').children().should('have.length', 2);
-    cy.get('body').type('{esc}');
-    cy.get('#modals').children().should('have.length', 0);
+    cy.get('@kratorBun').click();
+    cy.get('@modalComponent').children().should('have.length', 2);
+    cy.get('@MainPage').type('{esc}');
+    cy.get('@modalComponent').children().should('have.length', 0);
   });
 
   it ('Проверка закрытия модального окна ингредиента: закрытие по нажатию (оверлей)', () => {
-    cy.contains('Краторная булка N-200i').click();
-    cy.get('#modals').children().should('have.length', 2);
+    cy.get('@kratorBun').click();
+    cy.get('@modalComponent').children().should('have.length', 2);
     cy.get('#overlay').click({ force: true });
-    cy.get('#modals').children().should('have.length', 0);
+    cy.get('@modalComponent').children().should('have.length', 0);
   });
 });
 
@@ -61,7 +69,12 @@ describe('Тесты создания заказа', () => {
     cy.intercept('POST', '/api/orders', { fixture: 'orders.json' });
     cy.setCookie('accessToken', 'accessToken');
     window.localStorage.setItem('refreshToken', 'refreshToken');
-    cy.visit('http://localhost:4000');
+    cy.visit('/');
+    cy.get('body').as('MainPage');
+    cy.get(':nth-child(2) > :nth-child(2) > .common_button').as('addButtonBun');
+    cy.get(':nth-child(4) > :nth-child(2) > .common_button').as('addButtonMeet');
+    cy.get(':nth-child(6) > :nth-child(2) > .common_button').as('addButtonSauce');
+    cy.get('#modals').as('modalComponent');
   });
 
   afterEach(() => {
@@ -70,19 +83,18 @@ describe('Тесты создания заказа', () => {
   });
 
   it ('Сборка заказа и отправка заказа', () => {
-    cy.get('body').contains('Флюоресцентная булка R2-D3');
-    cy.get(':nth-child(2) > :nth-child(2) > .common_button').click();
-    cy.get('body').contains('Филе Люминесцентного тетраодонтимформа');
-    cy.get(':nth-child(4) > :nth-child(2) > .common_button').click();
-    cy.get('body').contains('Соус с шипами Антарианского плоскоходца');
-    cy.get(':nth-child(6) > :nth-child(4) > .common_button').click();
+    cy.get('@MainPage').contains('Флюоресцентная булка R2-D3');
+    cy.get('@addButtonBun').click();
+    cy.get('@MainPage').contains('Филе Люминесцентного тетраодонтимформа');
+    cy.get('@addButtonMeet').click();
+    cy.get('@MainPage').contains('Соус с шипами Антарианского плоскоходца');
+    cy.get('@addButtonSauce').click();
     cy.contains('Оформить заказ').click();
-    cy.get('#modals').children().should('have.length', 2);
-    cy.wait(500);
+    cy.get('@modalComponent').children().should('have.length', 2);
     cy.get('[data-cy=order-id]').should('have.text','58383');
-    cy.get('#modals').find('button').click();
-    cy.get('#modals').children().should('have.length', 0);
-    cy.get('body').contains('Выберите булки');
-    cy.get('body').contains('Выберите начинку');
+    cy.get('@modalComponent').find('button').click();
+    cy.get('@modalComponent').children().should('have.length', 0);
+    cy.get('@MainPage').contains('Выберите булки');
+    cy.get('@MainPage').contains('Выберите начинку');
   });
 });

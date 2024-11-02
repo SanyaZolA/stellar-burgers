@@ -22,7 +22,7 @@ type IInitialState = {
   error: undefined | string;
 };
 
-const initialState: IInitialState = {
+export const initialState: IInitialState = {
   user: {
     name: '',
     email: ''

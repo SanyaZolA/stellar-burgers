@@ -3,7 +3,8 @@ import {
   getIngredientsSelectors,
   getIngredientsThunk,
   getLoadingIngredients,
-  reducer
+  reducer,
+  initialState
 } from './ingredientsSlice';
 import * as burgerApi from '../../utils/burger-api';
 import { TFeedsResponse } from '../../utils/burger-api';
@@ -14,18 +15,6 @@ type getIngredientsApi = () => Promise<TFeedsResponse>;
 jest.mock('../../utils/burger-api', () => ({
   getIngredientsApi: jest.fn() as jest.MockedFunction<getIngredientsApi>
 }));
-
-type IinitialState = {
-  ingredients: TIngredient[];
-  isLoading: boolean;
-  error: string | undefined;
-};
-
-const initialState: IinitialState = {
-  ingredients: [],
-  isLoading: false,
-  error: undefined
-};
 
 const stateState = {
   ingredients: initialState

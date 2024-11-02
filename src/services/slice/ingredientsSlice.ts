@@ -16,7 +16,7 @@ type IinitialState = {
   error: string | undefined;
 };
 
-const initialState: IinitialState = {
+export const initialState: IinitialState = {
   ingredients: [],
   isLoading: false,
   error: undefined

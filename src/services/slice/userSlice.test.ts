@@ -6,30 +6,8 @@ import {
   getUserApiThunk,
   updateUserApiThunk,
   logoutApiThunk,
-  userSlice
+  initialState
 } from './userSlice';
-import { error } from 'console';
-
-type TUserData = {
-  name: string;
-  email: string;
-  password: string;
-};
-
-type IInitialState = {
-  user: Omit<TUserData, 'password'>;
-  loading: boolean;
-  error: undefined | string;
-};
-
-const initialState: IInitialState = {
-  user: {
-    name: '',
-    email: ''
-  },
-  loading: false,
-  error: undefined
-};
 
 const mockUser = {
   user: { name: 'Санька', email: 'test@example.com' },
@@ -182,4 +160,21 @@ describe('userSlice', () => {
       error: undefined
     });
   });
+
+  test('Тест pending у updateUserApiThunk', () => {
+    store.dispatch(updateUserApiThunk.pending('', {name: 'Test User', email: 'test@example.com'}));
+    expect(store.getState().reducer.loading).toBe(true);
+  });
+
+  test('Тест pending у updateUserApiThunk', () => {
+    store.dispatch(updateUserApiThunk.pending('', {name: 'Test User', email: 'test@example.com'}));
+    expect(store.getState().reducer.loading).toBe(true);
+  });
+  
+  test('Тест fulfilled у updateUserApiThunk', () => {
+    const mockUser = { user: { name: 'Test User', email: 'test@example.com'}, success: true, accessToken: 'test', refreshToken: 'test' };
+    store.dispatch(updateUserApiThunk.fulfilled(mockUser, '', {name: 'Test User', email: 'test@example.com'}));
+    expect(store.getState().reducer.user).toEqual(mockUser.user);
+    expect(store.getState().reducer.loading).toBe(false);
+  })
 }); 
