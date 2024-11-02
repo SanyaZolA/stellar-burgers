@@ -8,14 +8,9 @@ import { getFeedThunk, getFeedSelectors } from '../../services/slice/feedSlice';
 export const Feed: FC = () => {
   /** TODO: взять переменную из стора */
   const dispatch: AppDispatch = useDispatch();
-
   const feeds = useSelector(getFeedSelectors);
 
   const orders: TOrder[] = [...feeds.orders];
-
-  useEffect(() => {
-    dispatch(getFeedThunk());
-  }, []);
 
   if (!orders.length) {
     return <Preloader />;
@@ -25,3 +20,5 @@ export const Feed: FC = () => {
     <FeedUI orders={orders} handleGetFeeds={() => dispatch(getFeedThunk())} />
   );
 };
+
+export default Feed;

@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
+import { v4 as uuidv4 } from 'uuid';
 
-type IinitialState = {
+export type IinitialState = {
   bun: TIngredient | null;
   ingredients: TConstructorIngredient[];
 };
 
-const initialState: IinitialState = {
+export const initialState: IinitialState = {
   bun: null,
   ingredients: []
 };
@@ -17,7 +18,7 @@ const burgerIngredientsSlice = createSlice({
   reducers: {
     addIngredient: {
       prepare: (ingredient: TIngredient) => ({
-        payload: { ...ingredient, id: window.crypto.randomUUID() },
+        payload: { ...ingredient, id: uuidv4() },
         meta: {},
         error: null
       }),

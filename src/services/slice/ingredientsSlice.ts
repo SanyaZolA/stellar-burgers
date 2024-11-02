@@ -13,11 +13,13 @@ export const getIngredientsThunk = createAsyncThunk(
 type IinitialState = {
   ingredients: TIngredient[];
   isLoading: boolean;
+  error: string | undefined;
 };
 
-const initialState: IinitialState = {
+export const initialState: IinitialState = {
   ingredients: [],
-  isLoading: false
+  isLoading: false,
+  error: undefined
 };
 
 export const IngredientsSlice = createSlice({
@@ -27,6 +29,11 @@ export const IngredientsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getIngredientsThunk.pending, (state) => {
       state.isLoading = true;
+      state.error = undefined;
+    });
+    builder.addCase(getIngredientsThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
     });
     builder.addCase(getIngredientsThunk.fulfilled, (state, action) => {
       state.ingredients = action.payload;

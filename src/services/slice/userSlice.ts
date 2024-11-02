@@ -5,7 +5,7 @@ import {
   logoutApi,
   registerUserApi,
   updateUserApi
-} from '@api';
+} from '../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
 import { setCookie } from '../../utils/cookie';
@@ -19,14 +19,16 @@ type TUserData = {
 type IInitialState = {
   user: Omit<TUserData, 'password'>;
   loading: boolean;
+  error: undefined | string;
 };
 
-const initialState: IInitialState = {
+export const initialState: IInitialState = {
   user: {
     name: '',
     email: ''
   },
-  loading: false
+  loading: false,
+  error: undefined
 };
 
 export const registerUserApiThunk = createAsyncThunk(
@@ -73,35 +75,78 @@ export const logoutApiThunk = createAsyncThunk(
   }
 );
 
-const userSlice = createSlice({
+export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(registerUserApiThunk.pending, (state) => {
+      state.loading = true;
+      state.error = undefined;
+    });
+    builder.addCase(registerUserApiThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    });
     builder.addCase(registerUserApiThunk.fulfilled, (state, { payload }) => {
       state.user = payload.user;
+      state.loading = false;
+    });
+
+    builder.addCase(loginUserApiThunk.pending, (state) => {
+      state.loading = true;
+      state.error = undefined;
+    });
+    builder.addCase(loginUserApiThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
     });
     builder.addCase(loginUserApiThunk.fulfilled, (state, { payload }) => {
       state.user = payload.user;
+      state.loading = false;
     });
+
     builder.addCase(getUserApiThunk.pending, (state) => {
       state.loading = true;
+      state.error = undefined;
+    });
+    builder.addCase(getUserApiThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
     });
     builder.addCase(getUserApiThunk.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.user = payload.user;
     });
-    builder.addCase(getUserApiThunk.rejected, (state) => {
+
+    builder.addCase(updateUserApiThunk.pending, (state) => {
+      state.loading = true;
+      state.error = undefined;
+    });
+    builder.addCase(updateUserApiThunk.rejected, (state, action) => {
       state.loading = false;
+      state.error = action.error.message;
     });
     builder.addCase(updateUserApiThunk.fulfilled, (state, { payload }) => {
       state.user = payload.user;
+      state.loading = false;
+    });
+
+    builder.addCase(logoutApiThunk.pending, (state) => {
+      state.loading = true;
+      state.error = undefined;
+    });
+    builder.addCase(logoutApiThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
     });
     builder.addCase(logoutApiThunk.fulfilled, (state) => {
       state.user = {
         name: '',
         email: ''
       };
+      state.loading = false;
+      state.error = undefined;
     });
   },
   selectors: {
