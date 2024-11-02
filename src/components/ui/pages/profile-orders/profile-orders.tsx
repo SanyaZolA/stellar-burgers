@@ -15,3 +15,5 @@ export const ProfileOrdersUI: FC<ProfileOrdersUIProps> = ({ orders }) => (
     </div>
   </main>
 );
+
+export default ProfileOrdersUI;

@@ -10,7 +10,7 @@ import {
 import {
   getBurgerIngredient,
   delIngredient
-} from '../../services/slice/burgerIngredientsSlise';
+} from '../../services/slice/burgerIngredientsSlice';
 import {
   addOrderBurgerThunk,
   getOrderModalDataSelector,
@@ -18,6 +18,7 @@ import {
   resetOrderState
 } from '../../services/slice/ordersSlice';
 import { useNavigate } from 'react-router-dom';
+import { getFeedThunk } from '../../services/slice/feedSlice';
 
 export const BurgerConstructor: FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -44,6 +45,7 @@ export const BurgerConstructor: FC = () => {
       ];
       dispatch(addOrderBurgerThunk(orderIngredients));
       dispatch(delIngredient());
+      dispatch(getFeedThunk());
     }
   };
 

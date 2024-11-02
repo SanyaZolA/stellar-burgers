@@ -38,3 +38,5 @@ export const ForgotPassword: FC = () => {
     />
   );
 };
+
+export default ForgotPassword;

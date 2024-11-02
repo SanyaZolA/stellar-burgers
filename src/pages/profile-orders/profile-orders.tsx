@@ -8,12 +8,9 @@ import {
 import { AppDispatch, useDispatch, useSelector } from '../../services/store';
 
 export const ProfileOrders: FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getOrdersThunk());
-  }, []);
-
   const orders: TOrder[] = useSelector(getOrdersSelectors);
 
   return <ProfileOrdersUI orders={orders} />;
 };
+
+export default ProfileOrders;
