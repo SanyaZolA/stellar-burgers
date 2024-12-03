@@ -1,18 +1,18 @@
-import type {Config} from 'jest';
+import type { Config } from 'jest';
 
 module.exports = {
-  testEnvironment: 'jsdom',
+  testEnvironment: 'jsdom'
 };
 
 const config: Config = {
   collectCoverage: true,
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
   coverageProvider: 'v8',
   preset: 'ts-jest',
   transform: {
     '^.+\\.(ts|tsx)?$': 'ts-jest',
-    '^.+\\.(js|jsx)$': 'babel-jest',
-  },
+    '^.+\\.(js|jsx)$': 'babel-jest'
+  }
 };
 
 export default config;

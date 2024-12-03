@@ -13,7 +13,7 @@ const mockUser = {
   user: { name: 'Санька', email: 'test@example.com' },
   success: true,
   accessToken: 'test',
-  refreshToken: 'test',
+  refreshToken: 'test'
 };
 
 const store = configureStore({
@@ -109,8 +109,18 @@ describe('userSlice', () => {
   });
 
   test('Тест fulfilled у loginUserApiThunk', () => {
-    const mockUser = { user: { name: 'Test User', email: 'test@example.com'}, success: true, accessToken: 'test', refreshToken: 'test' };
-    store.dispatch(loginUserApiThunk.fulfilled(mockUser, '', {email: 'test@example.com', password: '1234567'}));
+    const mockUser = {
+      user: { name: 'Test User', email: 'test@example.com' },
+      success: true,
+      accessToken: 'test',
+      refreshToken: 'test'
+    };
+    store.dispatch(
+      loginUserApiThunk.fulfilled(mockUser, '', {
+        email: 'test@example.com',
+        password: '1234567'
+      })
+    );
     expect(store.getState().reducer.user).toEqual(mockUser.user);
     expect(store.getState().reducer.loading).toBe(false);
   });
@@ -121,7 +131,9 @@ describe('userSlice', () => {
   });
 
   test('Тест rejected у getUserApiThunk', () => {
-    store.dispatch(getUserApiThunk.rejected(new Error('error'), 'Ошибка тестирования'));
+    store.dispatch(
+      getUserApiThunk.rejected(new Error('error'), 'Ошибка тестирования')
+    );
     expect(store.getState().reducer.loading).toBe(false);
     expect(store.getState().reducer.error).toEqual('error');
   });
@@ -138,7 +150,9 @@ describe('userSlice', () => {
   });
 
   test('Тест rejected у logoutApiThunk', () => {
-    store.dispatch(logoutApiThunk.rejected(new Error('error'), 'Ошибка тестирования'));
+    store.dispatch(
+      logoutApiThunk.rejected(new Error('error'), 'Ошибка тестирования')
+    );
     expect(store.getState().reducer.loading).toBe(false);
     expect(store.getState().reducer.error).toEqual('error');
   });
@@ -146,7 +160,11 @@ describe('userSlice', () => {
   test('Тест fulfilled у logoutApiThunk', () => {
     store.dispatch({
       type: 'user/setUser',
-      payload: { user: { name: 'Санька', email: 'test@example.com' }, loading: false, error: 'error'}
+      payload: {
+        user: { name: 'Санька', email: 'test@example.com' },
+        loading: false,
+        error: 'error'
+      }
     });
     const mockUser = { success: true };
     store.dispatch(logoutApiThunk.fulfilled(mockUser, ''));
@@ -162,19 +180,39 @@ describe('userSlice', () => {
   });
 
   test('Тест pending у updateUserApiThunk', () => {
-    store.dispatch(updateUserApiThunk.pending('', {name: 'Test User', email: 'test@example.com'}));
+    store.dispatch(
+      updateUserApiThunk.pending('', {
+        name: 'Test User',
+        email: 'test@example.com'
+      })
+    );
     expect(store.getState().reducer.loading).toBe(true);
   });
 
   test('Тест pending у updateUserApiThunk', () => {
-    store.dispatch(updateUserApiThunk.pending('', {name: 'Test User', email: 'test@example.com'}));
+    store.dispatch(
+      updateUserApiThunk.pending('', {
+        name: 'Test User',
+        email: 'test@example.com'
+      })
+    );
     expect(store.getState().reducer.loading).toBe(true);
   });
-  
+
   test('Тест fulfilled у updateUserApiThunk', () => {
-    const mockUser = { user: { name: 'Test User', email: 'test@example.com'}, success: true, accessToken: 'test', refreshToken: 'test' };
-    store.dispatch(updateUserApiThunk.fulfilled(mockUser, '', {name: 'Test User', email: 'test@example.com'}));
+    const mockUser = {
+      user: { name: 'Test User', email: 'test@example.com' },
+      success: true,
+      accessToken: 'test',
+      refreshToken: 'test'
+    };
+    store.dispatch(
+      updateUserApiThunk.fulfilled(mockUser, '', {
+        name: 'Test User',
+        email: 'test@example.com'
+      })
+    );
     expect(store.getState().reducer.user).toEqual(mockUser.user);
     expect(store.getState().reducer.loading).toBe(false);
-  })
-}); 
+  });
+});

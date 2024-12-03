@@ -31,6 +31,7 @@ const feedSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getFeedThunk.pending, (state) => {
+      state.success = false;
       state.isLoading = true;
       state.error = undefined;
     });

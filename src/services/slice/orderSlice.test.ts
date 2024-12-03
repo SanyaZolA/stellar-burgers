@@ -1,5 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { ordersSlice, getOrdersThunk, addOrderBurgerThunk, resetOrderState } from './ordersSlice';
+import {
+  ordersSlice,
+  getOrdersThunk,
+  addOrderBurgerThunk,
+  resetOrderState
+} from './ordersSlice';
 
 const store = configureStore({
   reducer: {
@@ -9,16 +14,17 @@ const store = configureStore({
 
 const mockOrderResponse = {
   order: {
-    "ingredients": [], 
+    ingredients: [],
     _id: '1',
-    status: "done",
-    name: "Краторный бургер",
-    createdAt: "2024-11-02T12:02:19.943Z",
-    updatedAt: "2024-11-02T12:02:21.095Z",
+    status: 'done',
+    name: 'Краторный бургер',
+    createdAt: '2024-11-02T12:02:19.943Z',
+    updatedAt: '2024-11-02T12:02:21.095Z',
     number: 58438,
-    price: 2510 }, // Замените на реальные поля TOrder
+    price: 2510
+  }, // Замените на реальные поля TOrder
   success: true, // Убедитесь, что это свойство есть
-  name: 'New Order',
+  name: 'New Order'
 };
 
 describe('ordersSlice', () => {
@@ -37,22 +43,23 @@ describe('ordersSlice', () => {
 
   test('Тест fulfilled для getOrdersThunk', async () => {
     const mockOrders = [
-      {   _id: '1',
+      {
+        _id: '1',
         status: 'done',
         name: 'Order 1',
         createdAt: '2024-11-02T00:05:50.303Z',
         updatedAt: '2024-11-02T00:05:51.313Z',
         number: 58394,
-        ingredients: [],
+        ingredients: []
       },
-      {   
+      {
         _id: '2',
         status: 'done',
         name: 'Order 1',
         createdAt: '2024-11-02T00:05:50.303Z',
         updatedAt: '2024-11-02T00:05:51.313Z',
         number: 58394,
-        ingredients: [],
+        ingredients: []
       }
     ];
 
@@ -62,20 +69,32 @@ describe('ordersSlice', () => {
   });
 
   test('Тест pending для addOrderBurgerThunk', () => {
-    store.dispatch(addOrderBurgerThunk.pending('', ['ingredient1', 'ingredient2']));
+    store.dispatch(
+      addOrderBurgerThunk.pending('', ['ingredient1', 'ingredient2'])
+    );
     const state = store.getState().orders;
     expect(state.orderStatus).toBe(true);
   });
 
   test('Тест fulfilled для addOrderBurgerThunk', async () => {
-    await store.dispatch(addOrderBurgerThunk.fulfilled(mockOrderResponse, '', ['ingredient1', 'ingredient2']));
+    await store.dispatch(
+      addOrderBurgerThunk.fulfilled(mockOrderResponse, '', [
+        'ingredient1',
+        'ingredient2'
+      ])
+    );
     const state = store.getState().orders;
     expect(state.orderStatus).toBe(false);
     expect(state.orderModalData).toEqual(mockOrderResponse.order);
   });
 
   test('Тест resetOrderState action', () => {
-    store.dispatch(addOrderBurgerThunk.fulfilled(mockOrderResponse, '', ['ingredient1', 'ingredient2']));
+    store.dispatch(
+      addOrderBurgerThunk.fulfilled(mockOrderResponse, '', [
+        'ingredient1',
+        'ingredient2'
+      ])
+    );
     store.dispatch(resetOrderState());
     const state = store.getState().orders;
     expect(state.orderStatus).toBe(false);

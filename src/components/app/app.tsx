@@ -1,5 +1,15 @@
 import React, { lazy, Suspense, useEffect } from 'react';
-import { ConstructorPage, Login, Register, Profile, NotFound404 } from '@pages';
+import {
+  ConstructorPage,
+  Login,
+  Register,
+  Profile,
+  Page404,
+  Feed,
+  ForgotPassword,
+  ResetPassword,
+  ProfileOrders
+} from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
 import { AppHeader, OrderInfo, Modal, IngredientDetails } from '@components';
@@ -32,17 +42,6 @@ const App = () => {
     dispatch(getOrdersThunk());
   }, [dispatch]);
 
-  const Feed = lazy(() => import('../../pages/feed/feed'));
-  const ForgotPassword = lazy(
-    () => import('../../pages/forgot-password/forgot-password')
-  );
-  const ResetPassword = lazy(
-    () => import('../../pages/reset-password/reset-password')
-  );
-  const ProfileOrders = lazy(
-    () => import('../../pages/profile-orders/profile-orders')
-  );
-
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -51,7 +50,7 @@ const App = () => {
           <Route path='/' element={<ConstructorPage />} />
           <Route path='/feed' element={<Feed />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
+
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/reset-password' element={<ResetPassword />} />
           <Route
@@ -80,7 +79,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route path='*' element={<NotFound404 />} />
+          <Route path='*' element={<Page404 />} />
         </Routes>
 
         {background && (
