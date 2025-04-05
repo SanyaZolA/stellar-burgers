@@ -12,7 +12,7 @@ import { OrderStatus } from '@components';
 export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
   <div className={styles.wrap}>
     <h3
-      className={`text text_type_main-medium  pb-3 pt-5 ${styles.header}`}
+      className={`text text_type_main-medium  pb-3 pt-5 ${styles.number}`}
       style={{ textAlign: 'center' }}
     >
       #{orderInfo.number}

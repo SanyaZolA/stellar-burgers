@@ -28,7 +28,6 @@ export const Login: FC = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      dispatch(getUserApiThunk());
       setInitialLoad(false);
     }
   }, [dispatch, isAuthenticated]);
@@ -60,3 +59,5 @@ export const Login: FC = () => {
     />
   );
 };
+
+export default Login;
